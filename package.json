@@ -1,5 +1,5 @@
 {
-  "name": "NodeServer",
+  "name": "pure-node-server",
   "version": "1.0.0",
   "description": "Simple node server",
   "main": "index.js",
@@ -12,8 +12,5 @@
   ],
   "author": "netgeeker",
   "license": "MIT",
-  "dependencies": {
-    "jade": "^1.9.1",
-    "node-static": "^0.7.6"
-  }
+  "dependencies": {}
 }
