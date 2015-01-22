@@ -1,0 +1,17 @@
+
+body {
+    font-family: Verdana,
+    font-size: 100%;
+}
+
+#wrapper {
+    padding-top: 50px;
+    text-align: center;
+}
+
+#footer {
+    color: #ccc;
+    font-size: 12px;
+    margin-top: 200px;
+    text-align: center;
+}

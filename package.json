@@ -1,0 +1,19 @@
+{
+  "name": "NodeServer",
+  "version": "1.0.0",
+  "description": "Simple node server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "server"
+  ],
+  "author": "netgeeker",
+  "license": "MIT",
+  "dependencies": {
+    "jade": "^1.9.1",
+    "node-static": "^0.7.6"
+  }
+}
