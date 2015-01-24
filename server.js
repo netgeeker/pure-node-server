@@ -1,4 +1,3 @@
-
 var http = require("http"),
     fs = require("fs"),
     path = require("path");
@@ -10,40 +9,65 @@ var server = http.createServer(function (req, res){
         extName = path.extname(url),
         contentType = "",
         dirPath = ""
-        filePath = "";
-    
-    switch(extName){
-        case ".html":{
-            contentType = "text/html";
-            dirPath = "/public/views/";
-        } break;
-        case ".css":{
-            contentType = "text/css";
-            dirPath = "/public/css/";
-        } break;      
-        case ".js":{
-            contentType = "text/javascript";
-            dirPath = "/public/js/";
-        } break;
-        default: {
-            contentType = "text/html";
-            dirPath = "/public/views/";
-            url = "index.html";
+        filePath = "",
+        homePagePath = __dirname + "/public/views/index.html",
+        errorPagePath = __dirname + "/public/views/404.html";
+   
+    console.log(url);
+
+    if(url === "/"){
+        redirectToHome();
+    }
+    else{
+        switch(extName){
+            case ".html":{
+                contentType = "text/html";
+                dirPath = "/public/views/";
+            } break;
+            case ".css":{
+                contentType = "text/css";
+                dirPath = "/public/css/";
+            } break;      
+            case ".js":{
+                contentType = "text/javascript";
+                dirPath = "/public/js/";
+            } break;
         }
+
+        filePath = __dirname + dirPath + path.basename(url);
+        
+        fs.exists(filePath, function(isExists){
+            if(isExists){
+                readAndSendFile(res, filePath, contentType,200);
+            }
+            else {
+                redirect404();
+            }
+        });
+    }     
+
+
+    // Private functions -----     
+
+    function redirectToHome(){
+        readAndSendFile(res, homePagePath, "text/html",200);
     }
 
+    function redirect404(){
+        readAndSendFile(res, errorPagePath, "text/html", 404);
+    }
 
-    filePath = __dirname + dirPath + path.basename(url);
+    function readAndSendFile(response, filePath, contentType, status){
+        fs.readFile(filePath, function (err, data){
+            sendResponse(response, status, contentType, data); 
+        });
+    } 
 
-    fs.exists(filePath, function(isExists){
-        if(isExists){
-            fs.readFile(filePath, function (err, data){
-                res.writeHead(200, {"Content-Type": contentType});
-                res.write(data);
-                res.end();
-            });
-        }
-    });
+    function sendResponse(response, status, contentType, fileData){
+        response.writeHead(status, {"Content-Type": contentType});
+        response.write(fileData);
+        response.end(); 
+    }
 
 });
 
